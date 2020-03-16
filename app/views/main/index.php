@@ -42,9 +42,29 @@
         <div class="row d-flex justify-content-center">
             <nav>
                 <ul class="pagination">
+                    <?php if ($vars['currentPage'] > 1) : ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<?= $vars['currentPage'] - 1 ?>" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                    <?php endif ?>
                     <?php for ($i = 1; $i <= $vars['pagesCount']; $i++) : ?>
-                        <li class="page-item"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                        <?php if ($i == $vars['currentPage']) : ?>
+                            <li class="page-item active"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                        <?php else : ?>
+                            <li class="page-item"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                        <?php endif ?>
                     <?php endfor ?>
+                    <?php if ($vars['currentPage'] < $vars['pagesCount']) : ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<?= $vars['currentPage'] + 1 ?>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    <?php endif ?>
                 </ul>
             </nav>
         </div>
