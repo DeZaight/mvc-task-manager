@@ -18,12 +18,20 @@ class MainController extends Controller
 
         $start = $currentPage * $tasksPerPage - $tasksPerPage;
 
-        $tasks = $this->model->getTasksPerPage($start, $tasksPerPage);
+        if (!empty($_GET['sort'])) {
+            $sort = explode("-", $_GET['sort']);
+        } else {
+            $sort[0] = 'id';
+            $sort[1] = 'asc';
+        }
+
+        $tasks = $this->model->getTasksPerPage($start, $tasksPerPage, $sort[0], $sort[1]);
         $vars = [
             'auth' => $checkAuth,
             'tasks' => $tasks,
             'pagesCount' => $pagesCount,
-            'currentPage'  => $currentPage
+            'currentPage'  => $currentPage,
+            'sort' => $sort[0] . '-' . $sort[1]
         ];
 
         $this->view->render('Task manager', $vars);

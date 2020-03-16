@@ -132,12 +132,17 @@ async function sendDataCreateTask(req) {
 
     let result = await response.json();
 
-    console.log(result);
-
     if (!result['result']) {
         addNewTaskError.innerHTML = 'Unexpected error <br> Please try again';
     } else {
-        document.location.reload(true);
+        addNewTaskError.innerHTML = '<p style="color:#28a745">Great job! Task added!</p>'
+        const addNewTask = document.getElementById('addNewTask');
+        const btns = addNewTask.getElementsByClassName('modal-footer')[0];
+        btns.style.display = 'none'
+
+        setTimeout(() => {
+            document.location.reload(true)
+        }, 1000);
     }
 }
 
@@ -205,3 +210,29 @@ async function sendDataEditTask(req, id) {
         document.location.reload(true);
     }
 }
+
+// Sort
+const sortBtn = document.getElementById('sortBtn');
+const sortValue = document.getElementById('sortValue');
+
+sortBtn.addEventListener('click', () => {
+    let locationGet = window.location.search.replace('?', '');
+    let url = window.location.protocol + '//' + window.location.hostname
+
+    if (locationGet == '') {
+        url = url + '?sort=' + sortValue.value;
+        window.location = url;
+    } else {
+        url = url + '?' + locationGet.split('&')[0] + '&sort=' + sortValue.value;
+        window.location = url;
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const options = sortValue.getElementsByTagName('option');
+    [].forEach.call(options, el => {
+        if (el.value == sortValue.getAttribute('data-value')) {
+            el.setAttribute('selected', 'selected')
+        }
+    });
+});

@@ -1,6 +1,25 @@
 <div class="container">
     <?php if (!empty($vars['tasks'])) : ?>
 
+        <div class="sort row d-flex justify-content-center">
+            <div class="sort__wrapper col-6 d-flex justify-content-between align-items-center">
+                <div>
+                    Sort by:
+                    <select style="width: 150px; margin: 0 15px 0 5px;" id="sortValue" data-value="<?= $vars['sort'] ?>">
+                        <option value="id-asc">ID (asc)</option>
+                        <option value="id-desc">ID (desc)</option>
+                        <option value="name-asc">Name (asc)</option>
+                        <option value="name-desc">Name (desc)</option>
+                        <option value="email-asc">Email (asc)</option>
+                        <option value="email-desc">Email (desc)</option>
+                        <option value="status-asc">Status (asc)</option>
+                        <option value="status-desc">Status (desc)</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary btn-sm" id="sortBtn">Sort</button>
+            </div>
+        </div>
+
         <?php foreach ($vars['tasks'] as $key => $value) : ?>
             <div class="task row d-flex justify-content-center" id="task<?= $value['id'] ?>">
                 <div class="task__wrapper col-6">
@@ -44,7 +63,7 @@
                 <ul class="pagination">
                     <?php if ($vars['currentPage'] > 1) : ?>
                         <li class="page-item">
-                            <a class="page-link" href="?page=<?= $vars['currentPage'] - 1 ?>" aria-label="Previous">
+                            <a class="page-link" href="?page=<?= $vars['currentPage'] - 1 . '&sort=' . $vars['sort'] ?>" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                                 <span class="sr-only">Previous</span>
                             </a>
@@ -52,14 +71,14 @@
                     <?php endif ?>
                     <?php for ($i = 1; $i <= $vars['pagesCount']; $i++) : ?>
                         <?php if ($i == $vars['currentPage']) : ?>
-                            <li class="page-item active"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                            <li class="page-item active"><a class="page-link" href="?page=<?= $i . '&sort=' . $vars['sort'] ?>"><?= $i ?></a></li>
                         <?php else : ?>
-                            <li class="page-item"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                            <li class="page-item"><a class="page-link" href="?page=<?= $i . '&sort=' . $vars['sort'] ?>"><?= $i ?></a></li>
                         <?php endif ?>
                     <?php endfor ?>
                     <?php if ($vars['currentPage'] < $vars['pagesCount']) : ?>
                         <li class="page-item">
-                            <a class="page-link" href="?page=<?= $vars['currentPage'] + 1 ?>" aria-label="Next">
+                            <a class="page-link" href="?page=<?= $vars['currentPage'] + 1 . '&sort=' . $vars['sort'] ?>" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only">Next</span>
                             </a>

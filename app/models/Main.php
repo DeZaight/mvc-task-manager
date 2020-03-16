@@ -82,12 +82,15 @@ class Main extends Model
         return $result;
     }
 
-    public function getTasksPerPage($start, $end)
+    public function getTasksPerPage($start, $end, $sortBy, $sortOrder)
     {
-        $result = $this->db->fetchAll('SELECT * FROM tasks LIMIT :start, :end', array(
-            ':start' => $start,
-            ':end' => $end
-        ));
+        $result = $this->db->fetchAll(
+            'SELECT * FROM tasks ORDER BY ' . $sortBy . ' ' . $sortOrder . ' LIMIT :start, :end',
+            array(
+                ':start' => $start,
+                ':end' => $end,
+            )
+        );
         return $result;
     }
 
@@ -115,6 +118,8 @@ class Main extends Model
 
     public function editTask($json)
     {
+        $checkAuth = $this->checkAuth();
+
         $obj = json_decode($json, true);
 
         $id = isset($obj['id']) ? $obj['id'] : null;
@@ -123,13 +128,15 @@ class Main extends Model
 
         $result = false;
 
-        if (!empty($id) && !empty($description) && !empty($status)) {
-            $result = $this->db->query('UPDATE tasks SET description = :description, status = :status, edited = :edited WHERE id = :id', array(
-                ':id' => htmlspecialchars($id),
-                ':description' => htmlspecialchars($description),
-                ':status' => htmlspecialchars($status),
-                ':edited' => 1,
-            ));
+        if ($checkAuth) {
+            if (!empty($id) && !empty($description) && !empty($status)) {
+                $result = $this->db->query('UPDATE tasks SET description = :description, status = :status, edited = :edited WHERE id = :id', array(
+                    ':id' => htmlspecialchars($id),
+                    ':description' => htmlspecialchars($description),
+                    ':status' => htmlspecialchars($status),
+                    ':edited' => 1,
+                ));
+            }
         }
 
         header('Content-type: application/json');
