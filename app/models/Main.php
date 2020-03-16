@@ -75,7 +75,7 @@ class Main extends Model
         echo json_encode(array('result' => $result));
     }
 
-    public function getAllTasks($page = 1, $sort = null)
+    public function getAllTasks()
     {
 
         $result = $this->db->fetchAll('SELECT * FROM tasks');
