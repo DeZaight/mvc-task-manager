@@ -1,40 +1,42 @@
 <div class="container">
-    <div class="task row d-flex justify-content-center">
-        <div class="task__wrapper col-6">
-            <div class="row">
-                <div class="task__title col-12"> Test User <span class="task__email">(email@mail.com)</span></div>
-            </div>
-            <div class="row">
-                <div class="task__text col-12">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod numquam eligendi necessitatibus eius, atque optio quos dicta. Iure exercitationem corporis, sapiente in cupiditate dolor quasi unde non adipisci quas quibusdam?
+    <?php if (!empty($vars['tasks'])) : ?>
+
+        <?php foreach ($vars['tasks'] as $key => $value) : ?>
+            <div class="task row d-flex justify-content-center" id="task<?= $value['id'] ?>">
+                <div class="task__wrapper col-6">
+                    <div class="row">
+                        <div class="task__title col-12"> <?= $value['name'] ?> <span class="task__email">(<?= $value['email'] ?>)</span></div>
+                        <?php if ($vars['auth']) : ?>
+                            <a class="edit-button" onclick="editTask(<?= $value['id'] ?>)"><i class="fas fa-edit"></i></a>
+                        <?php endif ?>
+                    </div>
+                    <div class="row">
+                        <div class="task__text col">
+                            <?= $value['description'] ?>
+                        </div>
+                    </div>
+                    <div class="row f-flex justify-content-between">
+                        <div class="task__status col-8">
+                            <?php if ($value['status'] == 1) : ?>
+                                <span class="badge badge-warning">In progress</span>
+
+                            <?php elseif ($value['status'] == 2) : ?>
+                                <span class="badge badge-success">Complite</span>
+                            <?php endif ?>
+
+                            <?php if ($value['edited']) : ?>
+                                <span class="badge badge-secondary">Edited</span>
+                            <?php endif ?>
+                        </div>
+
+                        <?php if ($vars['auth']) : ?>
+                            <div class="save col-auto"></div>
+                        <?php endif ?>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="task row d-flex justify-content-center">
-        <div class="task__wrapper col-6">
-            <div class="row">
-                <div class="task__title col-12">Test User <span class="task__email">(email@mail.com)</span></div>
-            </div>
-            <div class="row">
-                <div class="task__text col-12">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod numquam eligendi necessitatibus eius, atque optio quos dicta. Iure exercitationem corporis, sapiente in cupiditate dolor quasi unde non adipisci quas quibusdam?
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="task row d-flex justify-content-center">
-        <div class="task__wrapper col-6">
-            <div class="row">
-                <div class="task__title col-12">Test User <span class="task__email">(email@mail.com)</span></div>
-            </div>
-            <div class="row">
-                <div class="task__text col-12">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod numquam eligendi necessitatibus eius, atque optio quos dicta. Iure exercitationem corporis, sapiente in cupiditate dolor quasi unde non adipisci quas quibusdam?
-                </div>
-            </div>
-        </div>
-    </div>
+        <?php endforeach ?>
+    <?php endif ?>
 
     <div class="row d-flex justify-content-center">
         <nav>
@@ -91,6 +93,9 @@
                             <textarea class="form-control" id="addNewTaskTextarea" rows="3" style="resize: none" placeholder="Your awesome task..."></textarea>
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 form-error" id="addNewTaskError"></div>
                 </div>
             </div>
             <div class="modal-footer justify-content-center">

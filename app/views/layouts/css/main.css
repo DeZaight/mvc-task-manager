@@ -12,6 +12,25 @@ body {
     position: relative;
 }
 
+div[contenteditable] {
+    margin: 0 15px 15px;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+div[contenteditable].is-invalid {
+    border-color: #dc3545;
+}
+
 .wrapper {
     min-height: calc(100vh - 71px);
 }
@@ -20,13 +39,19 @@ body {
     cursor: pointer;
 }
 
+.badge {
+    padding: 0.75em;
+}
+
 .modal-content {
     border-radius: 0;
 }
 
-.modal-header, .modal-footer {
+.modal-header,
+.modal-footer {
     border: 0;
 }
+
 .modal-body {
     padding: 0 15px;
 }
@@ -87,7 +112,23 @@ body {
 
 .task__text {
     font-size: 15px;
+    margin-bottom: 15px;
 }
+
+.task__status {
+    font-size: 14px;
+    color: #777;
+}
+
+.edit-button {
+    position: absolute;
+    right: 15px;
+}
+
+.edit-button:hover {
+    cursor: pointer;
+}
+
 
 .page-item:first-child .page-link {
     border-top-left-radius: 0;
