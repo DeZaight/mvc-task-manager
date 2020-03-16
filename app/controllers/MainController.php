@@ -12,9 +12,17 @@ class MainController extends Controller
         $checkAuth =  $this->model->checkAuth();
         $tasks = $this->model->getAllTasks();
 
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $tasksPerPage = 3;
+        $pagesCount = ceil(count($tasks) / $tasksPerPage);
+
+        $start = $page * $tasksPerPage - $tasksPerPage;
+
+        $tasks = $this->model->getTasksPerPage($start, $tasksPerPage);
         $vars = [
             'auth' => $checkAuth,
             'tasks' => $tasks,
+            'pagesCount' => $pagesCount,
         ];
 
         $this->view->render('Task manager', $vars);

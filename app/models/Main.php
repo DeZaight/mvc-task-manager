@@ -75,9 +75,19 @@ class Main extends Model
         echo json_encode(array('result' => $result));
     }
 
-    public function getAllTasks()
+    public function getAllTasks($page = 1, $sort = null)
     {
+
         $result = $this->db->fetchAll('SELECT * FROM tasks');
+        return $result;
+    }
+
+    public function getTasksPerPage($start, $end)
+    {
+        $result = $this->db->fetchAll('SELECT * FROM tasks LIMIT :start, :end', array(
+            ':start' => $start,
+            ':end' => $end
+        ));
         return $result;
     }
 

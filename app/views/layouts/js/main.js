@@ -51,7 +51,7 @@ async function sendDataSignin(req) {
         signinFormLogin.classList.add('is-invalid');
         signinFormPassword.classList.add('is-invalid');
     } else {
-        window.location = window.location.protocol + '//' + window.location.hostname;
+        document.location.reload(true);
     }
 }
 
@@ -77,7 +77,7 @@ logoutFormBtn.addEventListener('click', () => {
         let result = await response.json();
 
         if (result['result']) {
-            window.location = window.location.protocol + '//' + window.location.hostname;
+            document.location.reload(true);
         }
     }
 });
@@ -137,7 +137,7 @@ async function sendDataCreateTask(req) {
     if (!result['result']) {
         addNewTaskError.innerHTML = 'Unexpected error <br> Please try again';
     } else {
-        window.location = window.location.protocol + '//' + window.location.hostname;
+        document.location.reload(true);
     }
 }
 
@@ -202,6 +202,6 @@ async function sendDataEditTask(req, id) {
         </div>`
         task.children[0].innerHTML = task.children[0].innerHTML + div;
     } else {
-        window.location = window.location.protocol + '//' + window.location.hostname;
+        document.location.reload(true);
     }
 }

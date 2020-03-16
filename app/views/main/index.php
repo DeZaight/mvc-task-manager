@@ -38,27 +38,17 @@
         <?php endforeach ?>
     <?php endif ?>
 
-    <div class="row d-flex justify-content-center">
-        <nav>
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+    <?php if ($vars['pagesCount'] > 1) : ?>
+        <div class="row d-flex justify-content-center">
+            <nav>
+                <ul class="pagination">
+                    <?php for ($i = 1; $i <= $vars['pagesCount']; $i++) : ?>
+                        <li class="page-item"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                    <?php endfor ?>
+                </ul>
+            </nav>
+        </div>
+    <?php endif ?>
 </div>
 
 <button class="add-task btn btn-primary" data-toggle="modal" data-target="#addNewTask">
